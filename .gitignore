@@ -3,3 +3,7 @@
 *.iml
 # Maven
 target/
+#Eclipse
+org.eclipse*
+.project
+.classpath
