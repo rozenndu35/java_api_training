@@ -8,9 +8,7 @@ public class Launcher {
                 int port = Integer.parseInt(args[0]);
                 ServeurJeux serveur = new ServeurJeux(port);
                 serveur.initServeur();
-    		}catch (Exception e) {
-    			
-    		}
+    		}catch (Exception e) {}
     	}
     	
     }

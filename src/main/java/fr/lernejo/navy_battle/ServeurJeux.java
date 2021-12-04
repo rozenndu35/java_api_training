@@ -22,7 +22,6 @@ public class ServeurJeux {
 		 httpSrv.setExecutor(Executors.newFixedThreadPool(1));
 		 httpSrv.createContext("/ping", new CallHandler());
 		 httpSrv.createContext("/api/game/start", new StartHandler());
-		 
 		 httpSrv.start();
     }
 

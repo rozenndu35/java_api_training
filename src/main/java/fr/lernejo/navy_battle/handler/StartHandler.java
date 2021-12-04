@@ -1,13 +1,11 @@
 package fr.lernejo.navy_battle.handler;
 
+import fr.lernejo.navy_battle.util.JsonUtil;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class StartHandler implements HttpHandler{
@@ -38,8 +36,9 @@ public class StartHandler implements HttpHandler{
 		
 		return obj.toString();
 	}
+	
 	private boolean checkBody(InputStream bodyRequest) {
-		JSONObject json = inputStringTOJSON(bodyRequest);
+		JSONObject json = new JsonUtil().inputStringTOJSON(bodyRequest);
 		if (json != null) {
 			String id = json.getString("id");
 			String url = json.getString("url");
@@ -50,20 +49,5 @@ public class StartHandler implements HttpHandler{
 		}
 		return false;
 	}
-	
-	private JSONObject inputStringTOJSON(InputStream inputStream) {
-		try {
-		       BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-		       StringBuilder responseStrBuilder = new StringBuilder();
-		       String inputStr;
-		       while ((inputStr = streamReader.readLine()) != null)
-		           responseStrBuilder.append(inputStr);
-		       JSONObject jsonObject = new JSONObject(responseStrBuilder.toString());
-		       return jsonObject;
-		   } catch (IOException | JSONException e) {
-		       e.printStackTrace();
-		   }
-		return null;
-	}
-
+		
 }
