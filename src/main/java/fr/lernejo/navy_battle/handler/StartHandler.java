@@ -15,6 +15,9 @@ public class StartHandler implements HttpHandler{
 		InputStream bodyRequest = exchange.getRequestBody();
 		if (!"POST".equals(exchange.getRequestMethod())) {
 			exchange.sendResponseHeaders(404, 0);
+			try (OutputStream os = exchange.getResponseBody()) {
+				os.write(0);
+			}
 			return;
 		}else if ( checkBody(bodyRequest)){
 			String body = createBody(exchange);
@@ -24,6 +27,9 @@ public class StartHandler implements HttpHandler{
 			}
 		}else {
 			exchange.sendResponseHeaders(400, 0);
+			try (OutputStream os = exchange.getResponseBody()) {
+				os.write(0);
+			}
 		}		
 	}
 	
@@ -40,12 +46,14 @@ public class StartHandler implements HttpHandler{
 	private boolean checkBody(InputStream bodyRequest) {
 		JSONObject json = new JsonUtil().inputStringTOJSON(bodyRequest);
 		if (json != null) {
-			String id = json.getString("id");
-			String url = json.getString("url");
-			String message = json.getString("message");
-			if( id != null && url != null && message != null) {
-				return true;				
-			}
+			try {
+				String id = json.getString("id");
+				String url = json.getString("url");
+				String message = json.getString("message");
+				if( id != null && url != null && message != null) {
+					return true;				
+				}
+			}catch(Exception e) {}
 		}
 		return false;
 	}

@@ -2,6 +2,9 @@ package fr.lernejo.navy_battle;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
 import java.util.concurrent.Executors;
 import com.sun.net.httpserver.HttpServer;
 import fr.lernejo.navy_battle.handler.CallHandler;
@@ -16,7 +19,7 @@ public class ServeurJeux {
 	}
 	
 	public void initServeur() throws IOException {
-		System.out.println("debut");
+		System.out.println("Initialisation du serveur");
 		 InetSocketAddress addrToBind = new InetSocketAddress(this.port);
 		 HttpServer httpSrv = HttpServer.create(addrToBind, 0);
 		 httpSrv.setExecutor(Executors.newFixedThreadPool(1));
