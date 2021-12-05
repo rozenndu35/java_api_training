@@ -23,6 +23,13 @@ public class ServeurClientJeu {
 		HashMap<String, String> reponse = makeReponseRequest(requetePost);
     }
 	
+	public void fireOther(String p_otherAdress, String p_choixCase) {
+		System.out.println("tire sur le deuxieme serveur");
+		HttpRequest requeteGet = creationRequestGetFire(p_otherAdress, p_choixCase);
+		HashMap<String, String> reponse = makeReponseRequest(requeteGet);
+		System.out.println(reponse);
+    }
+	
 	public HttpRequest creationRequestPostStart(String p_otherAdress) {
 		return HttpRequest.newBuilder()
 			    .uri(URI.create(p_otherAdress + "/api/game/start"))
@@ -30,6 +37,9 @@ public class ServeurClientJeu {
 			    .setHeader("Content-Type", "application/json")
 			    .POST(BodyPublishers.ofString("{\"id\":\"1\", \"url\":\"http://localhost:" + this.port + "\", \"message\":\"hello\"}"))
 			    .build();
+	}
+	public HttpRequest creationRequestGetFire(String p_otherAdress, String p_choixCase) {
+		return HttpRequest.newBuilder().uri(URI.create(p_otherAdress + "/api/game/fire?cell=" + p_choixCase)).build();
 	}
 	
 	public HashMap<String, String> makeReponseRequest(HttpRequest p_requetePost){

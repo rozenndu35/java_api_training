@@ -15,6 +15,7 @@ public class Launcher {
                 String adresseOtherServeur = args[1];
                 ServeurClientJeu serveurClient = new ServeurClientJeu(port);
                 serveurClient.connectOther(adresseOtherServeur);
+                serveurClient.fireOther(adresseOtherServeur, "B2");
     		}catch (Exception e) {}
     	}
     }
