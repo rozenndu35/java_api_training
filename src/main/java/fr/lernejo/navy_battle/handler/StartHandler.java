@@ -13,24 +13,17 @@ public class StartHandler implements HttpHandler{
 	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		InputStream bodyRequest = exchange.getRequestBody();
-		if (!"POST".equals(exchange.getRequestMethod())) {
-			exchange.sendResponseHeaders(404, 0);
-			try (OutputStream os = exchange.getResponseBody()) {
-				os.write(0);
-			}
-			return;
-		}else if ( checkBody(bodyRequest)){
-			String body = createBody(exchange);
-			exchange.sendResponseHeaders(202, body.length());
-			try (OutputStream os = exchange.getResponseBody()) {
-				os.write(body.getBytes());
-			}
-		}else {
-			exchange.sendResponseHeaders(400, 0);
-			try (OutputStream os = exchange.getResponseBody()) {
-				os.write(0);
-			}
-		}		
+		String body = "";
+		int code = 400;
+		if (!"POST".equals(exchange.getRequestMethod())) { code = 404;}
+		else if ( checkBody(bodyRequest)){
+			body = createBody(exchange);
+			code = 202;
+		}
+		exchange.sendResponseHeaders(code, body.length());
+		try (OutputStream os = exchange.getResponseBody()) {
+			os.write(body.getBytes());
+		}
 	}
 	
 	private String createBody(HttpExchange exchange) {
