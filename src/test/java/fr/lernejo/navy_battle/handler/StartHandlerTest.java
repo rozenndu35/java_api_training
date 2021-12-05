@@ -63,9 +63,7 @@ public class StartHandlerTest {
 				        .thenApplyAsync(HttpResponse::statusCode).join();
 			Assertions.assertEquals(statusCodePOSTKO,400);
 			
-		}catch(Exception e) {
-			
-		}
+		}catch(Exception e) {}
 		
 	}
 }

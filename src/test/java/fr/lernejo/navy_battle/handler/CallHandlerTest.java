@@ -29,9 +29,7 @@ public class CallHandlerTest {
 			HttpResponse<String> response = completableFuture.join();
 			Assertions.assertEquals(response.statusCode(),200);
 			Assertions.assertEquals(response.body(),"OK");
-		}catch(Exception e) {
-			System.out.println(e);
-		}
+		}catch(Exception e) {}
 		
 	}
 }

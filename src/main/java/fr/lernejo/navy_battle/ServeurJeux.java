@@ -8,6 +8,7 @@ import java.net.http.HttpRequest.BodyPublishers;
 import java.util.concurrent.Executors;
 import com.sun.net.httpserver.HttpServer;
 import fr.lernejo.navy_battle.handler.CallHandler;
+import fr.lernejo.navy_battle.handler.FireHandler;
 import fr.lernejo.navy_battle.handler.StartHandler;
 
 
@@ -25,6 +26,7 @@ public class ServeurJeux {
 		 httpSrv.setExecutor(Executors.newFixedThreadPool(1));
 		 httpSrv.createContext("/ping", new CallHandler());
 		 httpSrv.createContext("/api/game/start", new StartHandler());
+		 httpSrv.createContext("/api/game/fire", new FireHandler());
 		 httpSrv.start();
     }
 
