@@ -76,7 +76,7 @@ public class PlateauTest {
 	@Test
 	void createCase(){
 		Map<String, Integer> position = plateau.createPosition(5,2) ;
-		Assertions.assertEquals(plateau.createCase(position),"C6");
+		Assertions.assertEquals(plateau.createCase(position),"F2");
 
 	}
 	

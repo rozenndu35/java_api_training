@@ -77,7 +77,7 @@ public class PlateauJoueurTest {
 	@Test
 	public void toucherAdverse() {
 		int[][] cell = new int[10][10];
-		plateau.toucherAdverse("A1", cell);
+		plateau.toucherAdverse("A0", cell);
 		Assertions.assertEquals(cell[0][0],2);
 	}
 }
