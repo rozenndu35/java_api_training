@@ -33,7 +33,7 @@ public class Jeux {
 	}
 
 	public void jouer() {
-		
+		System.out.println("Bienvenu dans la bataille naval");
 		boolean continuer = true;
 		while(continuer) {
 			if(this.datas.getData("monTour").equals("true")) {
@@ -74,12 +74,7 @@ public class Jeux {
 		for (Navire navire : this.armada) {
 			boolean toucher = this.bateau.toucher(navire, this.datas.getData("caseAdverseVisit"));
 			if(toucher) {
-				boolean couler = navire.checkCouler();
-				boolean allCouler = bateau.checkCouler(this.armada);
-				if(couler) { obj.put("consequence", "sunk");
-				}else { obj.put("consequence", "hit");}
-				obj.put("shipLeft", !allCouler);
-				return obj;
+				return this.attaqueToucher(navire);
 			}
 		}
 		obj.put("consequence", "miss");
@@ -88,6 +83,16 @@ public class Jeux {
 	}
 	public ArrayList<Navire> getArmade(){
 		return this.armada;
+	}
+	
+	public JSONObject attaqueToucher(Navire p_navire) {
+		JSONObject obj = new JSONObject();
+		boolean couler = p_navire.checkCouler();
+		boolean allCouler = bateau.checkCouler(this.armada);
+		if(couler) { obj.put("consequence", "sunk");
+		}else { obj.put("consequence", "hit");}
+		obj.put("shipLeft", !allCouler);
+		return obj;
 	}
 	
 }

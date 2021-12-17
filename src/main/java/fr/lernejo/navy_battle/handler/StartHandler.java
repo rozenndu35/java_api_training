@@ -11,7 +11,7 @@ import java.io.InputStream;
 import org.json.JSONObject;
 
 public class StartHandler implements HttpHandler{
-	private Data datas;
+	private final Data datas;
 
 	public StartHandler(Data p_datas) {
 		super();

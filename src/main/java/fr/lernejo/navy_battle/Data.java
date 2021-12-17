@@ -3,7 +3,7 @@ package fr.lernejo.navy_battle;
 import java.util.HashMap;
 
 public class Data {
-	private HashMap<String, String> datas = new HashMap<String, String>();
+	private final HashMap<String, String> datas = new HashMap<String, String>();
 	//monPort
 	//otherPort
 	//adresseOtherServeur
@@ -24,5 +24,15 @@ public class Data {
 	 */
 	public String getData(String p_key) {
 		return this.datas.get(p_key);
+	}
+	
+	/*
+	 * initialiser les donner du jeux
+	 * @param p_otherAdresse : l'addresse du deuxime serveur
+	 * @param p_tour : si a nous de jouer
+	 */
+	public void addOtherTour(String p_otherAdresse, String p_tour) {
+		this.datas.put("adresseOtherServeur", p_otherAdresse);
+		this.datas.put("monTour", p_tour);
 	}
 }

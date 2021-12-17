@@ -15,9 +15,9 @@ import fr.lernejo.navy_battle.game.Jeux;
 import fr.lernejo.navy_battle.util.HttpRequestUtil;
 
 public class FireHandler implements HttpHandler{
-	private Data datas;
-	private Jeux jeux;
-	private HashMap<String, String> body = new HashMap<>();
+	private final Data datas;
+	private final Jeux jeux;
+	private final HashMap<String, String> body = new HashMap<>();
 
 	public FireHandler(Data p_datas, Jeux p_jeux) {
 		super();
