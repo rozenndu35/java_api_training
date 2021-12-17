@@ -1,22 +1,38 @@
 package fr.lernejo.navy_battle;
 
+import fr.lernejo.navy_battle.game.Jeux;
+
 public class Launcher {
 
-    public static void main(String args[]){
-    	int port = Integer.parseInt(args[0]);
+   public static void main(String args[]){
+    	Data datas = new Data();
+    	ServeurClientJeu serveurClient = new ServeurClientJeu(datas);
+    	Jeux jeux = new Jeux(serveurClient, datas);
+    	ServeurJeux serveur = new ServeurJeux(datas, jeux);
+    	
+    	
     	if (args.length > 0 ) {
+    		System.out.println("Bienvenu");
+    		datas.addData("monPort", args[0]);
     		try{         
-                ServeurJeux serveur = new ServeurJeux(port);
                 serveur.initServeur();
+                if (args.length > 1 ) {
+            		datas.addData("adresseOtherServeur", args[1]);
+                    datas.addData("monTour", "false");
+                    serveurClient.connectOther();
+            	}else {
+            		while( datas.getData("connectionEffectuer") == null) {}
+                    datas.addData("adresseOtherServeur", "http://localhost:"+ datas.getData("otherPort"));
+                    datas.addData("monTour", "true");
+                    serveurClient.connectOther();
+            	}
+                jeux.jouer();
+                
+                
     		}catch (Exception e) {}
+    		
     	}
-    	if (args.length > 1 ) {
-    		try{     
-                String adresseOtherServeur = args[1];
-                ServeurClientJeu serveurClient = new ServeurClientJeu(port);
-                serveurClient.connectOther(adresseOtherServeur);
-                serveurClient.fireOther(adresseOtherServeur, "B2");
-    		}catch (Exception e) {}
-    	}
+    	
+    	
     }
 }

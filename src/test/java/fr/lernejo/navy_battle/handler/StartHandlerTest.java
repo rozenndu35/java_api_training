@@ -10,17 +10,26 @@ import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import fr.lernejo.navy_battle.Data;
+import fr.lernejo.navy_battle.ServeurClientJeu;
 import fr.lernejo.navy_battle.ServeurJeux;
+import fr.lernejo.navy_battle.game.Jeux;
 
 public class StartHandlerTest {
 	@Test
 	void handle() {
 		try {
-			ServeurJeux serveur = new ServeurJeux(9096);
+
+			Data datas = new Data();
+			datas.addData("monPort", "9096");
+			ServeurClientJeu clientServeur = new ServeurClientJeu(datas);
+			Jeux jeux = new Jeux(clientServeur, datas);
+			ServeurJeux serveur = new ServeurJeux(datas, jeux);
 	        serveur.initServeur();
+	        
 			HttpClient client = HttpClient.newHttpClient();
+			
 			//post avec ok json
-		
 			HttpRequest requetePost = HttpRequest.newBuilder()
 				    .uri(URI.create("http://localhost:9096/api/game/start"))
 				    .setHeader("Accept", "application/json")
@@ -32,7 +41,9 @@ public class StartHandlerTest {
 			HttpResponse<String> responsePOST = completableFuturePOST.join();
 			Assertions.assertEquals(responsePOST.statusCode(),202);
 			Assertions.assertEquals(responsePOST.body(),"{\"id\":\"xxx\",\"message\":\"Start ressus\",\"url\":\"http://localhost:9096\"}");
-		
+			Assertions.assertEquals(datas.getData("otherPort"),"9090");
+
+				
 			//autre post avec manque un parametre json
 			HttpRequest requestPOSTManque = HttpRequest.newBuilder()
 			        .uri(URI.create("http://localhost:9096/api/game/start"))

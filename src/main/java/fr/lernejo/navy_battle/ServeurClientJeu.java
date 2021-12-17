@@ -9,33 +9,32 @@ import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 public class ServeurClientJeu {
-	private final int port;
+	private final Data datas;
 	private final HttpClient serveurC;
 	
-	public ServeurClientJeu(int p_port) {
-		this.port = p_port;
+	public ServeurClientJeu(Data p_data) {
+		this.datas = p_data;
 		this.serveurC = HttpClient.newHttpClient();
 	}
 	
-	public void connectOther(String p_otherAdress) {
-		System.out.println("Connection au deuxieme serveur");
-		HttpRequest requetePost = creationRequestPostStart(p_otherAdress);
-		HashMap<String, String> reponse = makeReponseRequest(requetePost);
+	public void connectOther() {
+		System.out.println("Connection au deuxieme serveur sur : " + this.datas.getData("adresseOtherServeur"));
+		HttpRequest requetePost = creationRequestPostStart();
+		makeReponseRequest(requetePost);
     }
 	
-	public void fireOther(String p_otherAdress, String p_choixCase) {
-		System.out.println("tire sur le deuxieme serveur");
+	public HashMap<String, String> fireOther(String p_otherAdress, String p_choixCase) {
 		HttpRequest requeteGet = creationRequestGetFire(p_otherAdress, p_choixCase);
-		HashMap<String, String> reponse = makeReponseRequest(requeteGet);
-		System.out.println(reponse);
+		
+		return makeReponseRequest(requeteGet);
     }
 	
-	public HttpRequest creationRequestPostStart(String p_otherAdress) {
+	public HttpRequest creationRequestPostStart() {
 		return HttpRequest.newBuilder()
-			    .uri(URI.create(p_otherAdress + "/api/game/start"))
+			    .uri(URI.create(this.datas.getData("adresseOtherServeur") + "/api/game/start"))
 			    .setHeader("Accept", "application/json")
 			    .setHeader("Content-Type", "application/json")
-			    .POST(BodyPublishers.ofString("{\"id\":\"1\", \"url\":\"http://localhost:" + this.port + "\", \"message\":\"hello\"}"))
+			    .POST(BodyPublishers.ofString("{\"id\":\"1\", \"url\":\"http://localhost:" + this.datas.getData("monPort") + "\", \"message\":\"hello\"}"))
 			    .build();
 	}
 	public HttpRequest creationRequestGetFire(String p_otherAdress, String p_choixCase) {

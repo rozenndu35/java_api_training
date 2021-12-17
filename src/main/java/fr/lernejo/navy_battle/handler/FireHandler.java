@@ -2,6 +2,7 @@ package fr.lernejo.navy_battle.handler;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -9,20 +10,35 @@ import org.json.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import fr.lernejo.navy_battle.Data;
+import fr.lernejo.navy_battle.game.Jeux;
 import fr.lernejo.navy_battle.util.HttpRequestUtil;
 
 public class FireHandler implements HttpHandler{
+	private Data datas;
+	private Jeux jeux;
+	private HashMap<String, String> body = new HashMap<>();
 
+	public FireHandler(Data p_datas, Jeux p_jeux) {
+		super();
+		this.datas = p_datas;
+		this.jeux = p_jeux;
+		
+	}
+	
+	@Override
 	public void handle(HttpExchange exchange) throws IOException {
 		String body = "";
 		int code = 400;
+		JSONObject bodyCreate = checkBody(exchange);
 		if (!"GET".equals(exchange.getRequestMethod())) { code = 404;}
-		else if ( checkBody(exchange)){
-			body = createBody("miss", false);
+		else if (bodyCreate.getBoolean("passer")){
+			body = createBody(bodyCreate.getString("consequence"), bodyCreate.getBoolean("shipLeft"));
 			code = 202;
+			this.datas.addData("monTour", "true");
 		}
-		  exchange.getResponseHeaders().set("Accept", "application/json");
-		  exchange.getResponseHeaders().set("Content-Type", "application/json");
+		exchange.getResponseHeaders().set("Accept", "application/json");
+		exchange.getResponseHeaders().set("Content-Type", "application/json");
 		exchange.sendResponseHeaders(code, body.length());
 		try (OutputStream os = exchange.getResponseBody()) {
 			os.write(body.getBytes());
@@ -35,16 +51,21 @@ public class FireHandler implements HttpHandler{
 		obj.put("shipLeft", shipLeft);
 		return obj.toString();
 	}
-	private boolean checkBody(HttpExchange exchange) {
+	private JSONObject checkBody(HttpExchange exchange) {
 		Map<String, String> params = new HttpRequestUtil().queryToMap(exchange.getRequestURI().getQuery()); 
 		if(params.get("cell") != null) {
 			try {
-				String collone = params.get("cell").substring(0,1); //lettre
-				int ligne = Integer.parseInt(params.get("cell").substring(1,params.get("cell").length())); //nombre
-				return true;
+				String collone = params.get("cell").substring(0,1);
+				int ligne = Integer.parseInt(params.get("cell").substring(1,params.get("cell").length()));
+				this.datas.addData("caseAdverseVisit", params.get("cell"));
+				JSONObject body = this.jeux.subirAttaque();
+				body.put("passer", true);
+				return body;
 			}catch (Exception e) {}
 		}; 
-		return false;
+		JSONObject body= new JSONObject();
+		body.put("passer", false);
+		return body;
 	}
 	
 }

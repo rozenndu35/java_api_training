@@ -29,6 +29,20 @@ public class HttpRequestUtilTest {
 		        () -> Assertions.assertEquals(cell2.get("cell"), "B2"),
 		        () -> Assertions.assertEquals(cell2.get("ici"), "J10")
 		    );
-		//creer un input stream avec un json
+	}
+	
+	@Test
+	void jsonStringToMap() {
+		Map<String, String> vide = HttpRequestUtil.jsonStringToMap(null);
+		Assertions.assertAll(
+		        () -> Assertions.assertNotNull(vide),
+		        () -> Assertions.assertNull(vide.get("cell"))
+		    );
+		Map<String, String> cell2 = HttpRequestUtil.jsonStringToMap("{\"consequence\":\"miss\",\"shipLeft\":false}");
+		Assertions.assertAll(
+		        () -> Assertions.assertNotNull(cell2),
+		        () -> Assertions.assertEquals(cell2.get("consequence"), "miss"),
+		        () -> Assertions.assertEquals(cell2.get("shipLeft"), "false")
+		    );
 	}
 }
