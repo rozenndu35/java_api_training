@@ -1,14 +1,62 @@
 package fr.lernejo.navy_battle.game;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class NavireTest {
+	
+	@Test
+	void getTaille() {
+		HashMap<String, Integer> position = new HashMap<String, Integer>();
+		position.put("collone", 1);
+		position.put("ligne", 1);
+		Navire navire1 = new Navire(3, position, false);
+		Assertions.assertEquals(navire1.getTaille(), 3);
+		Navire navire2 = new Navire(1, position, false);
+		Assertions.assertEquals(navire2.getTaille(), 1);
+	}
+	
+	@Test
+	void getVertical() {
+		HashMap<String, Integer> position = new HashMap<String, Integer>();
+		position.put("collone", 1);
+		position.put("ligne", 1);
+		Navire navire1 = new Navire(3, position, true);
+		Assertions.assertEquals(navire1.getVertical(), true);
+		Navire navire2 = new Navire(1, position, false);
+		Assertions.assertEquals(navire2.getVertical(), false);
+	}
+	
+	
+	@Test
+	void getPostion() {
+		HashMap<String, Integer> position = new HashMap<String, Integer>();
+		position.put("collone", 1);
+		position.put("ligne", 1);
+		Navire navire1 = new Navire(3, position, true);
+		Map<String, Integer> positionRecup = navire1.getPostion();
+		Assertions.assertEquals(positionRecup.get("collone"), position.get("collone"));
+		Assertions.assertEquals(positionRecup.get("ligne"), position.get("ligne"));
+	}
+	
+	@Test
+	void getCaseBateau() {
+		HashMap<String, Integer> position = new HashMap<String, Integer>();
+		position.put("collone", 1);
+		position.put("ligne", 1);
+		Navire navire1 = new Navire(3, position, true);
+		boolean[] caseB= navire1.getCaseBateau();
+		Assertions.assertEquals(caseB[0], false);
+		Assertions.assertEquals(caseB[1], false);
+		Assertions.assertEquals(caseB[2], false);
+	}
+	
 	@Test
 	void toucherBateau() {
-		HashMap position = new HashMap<String, Integer>();
+		HashMap<String, Integer> position = new HashMap<String, Integer>();
 		position.put("collone", 1);
 		position.put("ligne", 1);
 		Navire navire1 = new Navire(3, position, false);
@@ -23,7 +71,7 @@ public class NavireTest {
 	
 	@Test
 	void couler() {
-		HashMap position = new HashMap<String, Integer>();
+		HashMap<String, Integer> position = new HashMap<String, Integer>();
 		position.put("collone", 1);
 		position.put("ligne", 1);
 		Navire navire1 = new Navire(0, position, false);

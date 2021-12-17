@@ -11,7 +11,7 @@ public class HttpRequestUtilTest {
 	private final HttpRequestUtil HttpRequestUtil = new HttpRequestUtil();
 	
 	@Test
-	void inputStringTOJSON() {
+	void queryToMap() {
 		Map<String, String> vide = HttpRequestUtil.queryToMap(null);
 		Assertions.assertAll(
 		        () -> Assertions.assertNotNull(vide),

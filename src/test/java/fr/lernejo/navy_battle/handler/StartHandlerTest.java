@@ -77,4 +77,14 @@ public class StartHandlerTest {
 		}catch(Exception e) {}
 		
 	}
+
+	@Test
+	void creatBody() {
+		//TODO
+	}
+	
+	@Test
+	void checkBody() {
+		//TODO
+	}
 }

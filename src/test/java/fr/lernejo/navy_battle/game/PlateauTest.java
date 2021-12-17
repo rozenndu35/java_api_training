@@ -36,6 +36,7 @@ public class PlateauTest {
 		Assertions.assertEquals(plateau.coloneinChar(8),'I');
 		Assertions.assertEquals(plateau.coloneinChar(9),'J');
 	}
+	
 	@Test
 	void saisieColonneValid() {
 		Assertions.assertEquals(plateau.saisieColonneValid('A'),true);
@@ -65,12 +66,30 @@ public class PlateauTest {
 		Assertions.assertEquals(position2.get("ligne"),5);
 	}
 	
-
-	
 	@Test
 	void createPosition(){
 		Map<String, Integer> position = plateau.createPosition(5,2) ;
 		Assertions.assertEquals(position.get("collone"),5);
 		Assertions.assertEquals(position.get("ligne"),2);
 	}
+
+	@Test
+	void createCase(){
+		Map<String, Integer> position = plateau.createPosition(5,2) ;
+		Assertions.assertEquals(plateau.createCase(position),"C6");
+
+	}
+	
+	@Test
+	void afficherMonPlateau(){
+		// TODO
+
+	}
+	
+	@Test
+	void afficherOtherPlateau(){
+		//TODO 
+
+	}
+
 }

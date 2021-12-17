@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class PlateauAdverseTest {
 	private final PlateauAdverse plateau = new PlateauAdverse();
 	@Test
-	void caseVisiter() {
+	void checkDejaVisiter() {
 		int[][] cell = new int[10][10];
 		Assertions.assertEquals(plateau.checkDejaVisiter(cell, "B2"),false);
 		cell[0][0] = 1; //visiter

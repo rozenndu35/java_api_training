@@ -16,7 +16,7 @@ import fr.lernejo.navy_battle.game.Jeux;
 
 public class CallHandlerTest {
 	@Test
-	void handleCall() {
+	void handle() {
 		try {
 			Data datas = new Data();
 			datas.addData("monPort", "9095");

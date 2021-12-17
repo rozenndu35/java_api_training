@@ -1,6 +1,5 @@
 package fr.lernejo.navy_battle.handler;
 
-import java.io.Console;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -73,4 +72,13 @@ public class FireHandlerTest {
 	}
 	
 
+	@Test
+	void creatBody() {
+		//TODO
+	}
+	
+	@Test
+	void checkBody() {
+		//TODO
+	}
 }

@@ -9,7 +9,7 @@ public class PlateauJoueurTest {
 
 	private PlateauJoueur plateau = new PlateauJoueur();
 	@Test
-	public void verifCase() {
+	public void verifCaseBataeu() {
 		Assertions.assertEquals(plateau.verifCaseBataeu(5, 3, 2, true, new int[10][10]),true);
 		int[][] cell = new int[10][10];
 		cell[2][3] = 1;
@@ -35,19 +35,49 @@ public class PlateauJoueurTest {
 	@Test
 	public void placerBateau() {
 		int[][] cell = new int[10][10];
-		HashMap position = new HashMap<String, Integer>();
+		HashMap<String, Integer> position = new HashMap<String, Integer>();
 		position.put("collone", 1);
 		position.put("ligne", 1);
 		plateau.placerBateau(3, true,position, cell);
 		Assertions.assertEquals(cell[1][1],1);
 		Assertions.assertEquals(cell[2][1],1);
 		Assertions.assertEquals(cell[3][1],1);
-		HashMap position2 = new HashMap<String, Integer>();
+		HashMap<String, Integer> position2 = new HashMap<String, Integer>();
 		position2.put("collone", 4);
 		position2.put("ligne", 4);
 		plateau.placerBateau(3, false,position2 , cell);
 		Assertions.assertEquals(cell[4][4],1);
 		Assertions.assertEquals(cell[4][5],1);
 		Assertions.assertEquals(cell[4][6],1);
+	}
+	@Test
+	public void placerBateauVerticale() {
+		int[][] cell = new int[10][10];
+		HashMap<String, Integer> position = new HashMap<String, Integer>();
+		position.put("collone", 1);
+		position.put("ligne", 1);
+		plateau.placerBateauVerticale(3, position, cell);
+		Assertions.assertEquals(cell[1][1],1);
+		Assertions.assertEquals(cell[2][1],1);
+		Assertions.assertEquals(cell[3][1],1);
+		
+	}
+	@Test
+	public void placerBateauHorizontale() {
+		int[][] cell = new int[10][10];
+		HashMap<String, Integer> position2 = new HashMap<String, Integer>();
+		position2.put("collone", 4);
+		position2.put("ligne", 4);
+		plateau.placerBateauHorizontale(3, position2 , cell);
+		Assertions.assertEquals(cell[4][4],1);
+		Assertions.assertEquals(cell[4][5],1);
+		Assertions.assertEquals(cell[4][6],1);
+	}
+	
+	@Test
+	public void toucherAdverse() {
+		int[][] cell = new int[10][10];
+		plateau.toucherAdverse("A1", cell);
+		Assertions.assertEquals(cell[0][0],2);
 	}
 }

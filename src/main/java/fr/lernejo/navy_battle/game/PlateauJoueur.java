@@ -20,6 +20,7 @@ public class PlateauJoueur extends Plateau{
 		}
 		return true;
 	}
+	
 	public void placerBateau(int p_taille, boolean p_vertical,Map<String, Integer> p_postion , int[][] p_cell) {
 		if (p_vertical) {
 			this.placerBateauVerticale(p_taille, p_postion, p_cell);

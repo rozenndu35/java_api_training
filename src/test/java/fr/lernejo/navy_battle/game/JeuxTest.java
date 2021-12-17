@@ -12,6 +12,27 @@ import fr.lernejo.navy_battle.Data;
 import fr.lernejo.navy_battle.ServeurClientJeu;
 
 public class JeuxTest{
+	
+	@Test
+	void jouer() {
+		// TODO
+	}
+	
+	@Test
+	void lancerAttaque() {
+		// TODO
+	}
+	
+	@Test
+	void getInfoAdverse() {
+		// TODO
+	}
+	
+	@Test
+	void modifierInfoAdverse() {
+		// TODO
+	}
+	
 	@Test
 	void subirAttaque() {
 		Data datas = new Data();
@@ -54,4 +75,21 @@ public class JeuxTest{
 		}
 		
 	}
+	
+	@Test
+	void getArmade() {
+		Data datas = new Data();
+		datas.addData("monPort", "9096");
+		ServeurClientJeu clientServeur = new ServeurClientJeu(datas);
+		Jeux jeux = new Jeux(clientServeur, datas);
+		ArrayList<Navire> armada = jeux.getArmade();
+		Assertions.assertEquals(armada.size(),5);
+	}
+	
+	@Test
+	void attaqueToucher() {
+		// TODO
+	}
+	
+
 }
