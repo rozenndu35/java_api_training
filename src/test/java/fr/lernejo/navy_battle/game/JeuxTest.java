@@ -12,7 +12,6 @@ import fr.lernejo.navy_battle.Data;
 import fr.lernejo.navy_battle.ServeurClientJeu;
 
 public class JeuxTest{
-	
 	@Test
 	void jouer() {
 		// TODO
@@ -88,7 +87,33 @@ public class JeuxTest{
 	
 	@Test
 	void attaqueToucher() {
-		// TODO
+		Data datas = new Data();
+		datas.addData("monPort", "9096");
+		datas.addData("caseAdverseVisit", "B0");
+		ServeurClientJeu clientServeur = new ServeurClientJeu(datas);
+		Jeux jeux = new Jeux(clientServeur, datas);
+		ArrayList<Navire> armada = jeux.getArmade();
+		JSONObject resultat = jeux.attaqueToucher(armada.get(0));
+		Assertions.assertEquals(resultat.getString("consequence"),"hit");
+		Assertions.assertEquals(resultat.getBoolean("shipLeft"),true);
+		int debut = armada.get(0).getPostion().get("collone");
+		if(armada.get(0).getVertical()) {debut = armada.get(0).getPostion().get("ligne");} 
+		for (int i = debut ; i < (armada.get(0).getTaille() + debut)  ; i++){
+			armada.get(0).toucherBateau(debut, i);
+		}
+		JSONObject resultat2 = jeux.attaqueToucher(armada.get(0));
+		Assertions.assertEquals(resultat2.getString("consequence"),"sunk");
+		Assertions.assertEquals(resultat2.getBoolean("shipLeft"),true);
+		for (Navire navire : armada) {
+			int debut2 = navire.getPostion().get("collone");
+			if(navire.getVertical()) {debut = navire.getPostion().get("ligne");} 
+			for (int i = debut2 ; i <  (navire.getTaille() + debut2) ; i++){
+				navire.toucherBateau(debut2, i);
+			}
+		}
+		JSONObject resultat3 = jeux.attaqueToucher(armada.get(0));
+		Assertions.assertEquals(resultat3.getString("consequence"),"sunk");
+		Assertions.assertEquals(resultat3.getBoolean("shipLeft"),false);
 	}
 	
 
