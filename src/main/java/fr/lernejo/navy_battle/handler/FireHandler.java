@@ -2,7 +2,6 @@ package fr.lernejo.navy_battle.handler;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -12,12 +11,13 @@ import com.sun.net.httpserver.HttpHandler;
 
 import fr.lernejo.navy_battle.Data;
 import fr.lernejo.navy_battle.game.Jeux;
+import fr.lernejo.navy_battle.game.OutilJeux;
 import fr.lernejo.navy_battle.util.HttpRequestUtil;
 
 public class FireHandler implements HttpHandler{
 	private final Data datas;
 	private final Jeux jeux;
-	private final HashMap<String, String> body = new HashMap<>();
+	private final OutilJeux outilJeux = new OutilJeux();
 
 	public FireHandler(Data p_datas, Jeux p_jeux) {
 		super();
@@ -47,16 +47,13 @@ public class FireHandler implements HttpHandler{
 	
 	private String createBody(String consequence , boolean shipLeft) {
 		JSONObject obj = new JSONObject();
-		obj.put("consequence", consequence);
-		obj.put("shipLeft", shipLeft);
+		this.outilJeux.addConsequenceShipLeft(obj , consequence,!shipLeft );
 		return obj.toString();
 	}
 	private JSONObject checkBody(HttpExchange exchange) {
 		Map<String, String> params = new HttpRequestUtil().queryToMap(exchange.getRequestURI().getQuery()); 
 		if(params.get("cell") != null) {
 			try {
-				String collone = params.get("cell").substring(0,1);
-				int ligne = Integer.parseInt(params.get("cell").substring(1,params.get("cell").length()));
 				this.datas.addData("caseAdverseVisit", params.get("cell"));
 				JSONObject body = this.jeux.subirAttaque();
 				body.put("passer", true);

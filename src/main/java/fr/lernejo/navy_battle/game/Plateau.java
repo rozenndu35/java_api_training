@@ -49,4 +49,31 @@ public class Plateau {
 		char collone = this.coloneinChar(p_postion.get("collone"));
 		return  String.valueOf(collone) + p_postion.get("ligne") ;
 	}
+	public void  afficherMonPlateau(String p_message, int[][] p_cell) {
+		System.out.println(p_message);
+		System.out.println(" \t A \t B \t C \t D \t E \t F \t G \t H \t I \t J");
+		for ( int ligne = 0; ligne < p_cell.length; ligne++) {
+			System.out.print(ligne + "\t");
+			for (int collone = 0; collone < p_cell[0].length ; collone ++) {
+				if (p_cell[ligne][collone] == 0 ) System.out.print( "  \t ");
+				if (p_cell[ligne][collone] == 1 ) System.out.print( "B \t ");
+				if (p_cell[ligne][collone] == 2 ) System.out.print( "T \t ");
+			}
+			System.out.print("\n");
+		}
+	}
+	public void  afficherOtherPlateau(String p_message, int[][] p_cell) {
+		System.out.println(p_message);
+		System.out.println("\t A \t B \t C \t D \t E \t F \t G \t H \t I \t J");
+		for ( int ligne = 0; ligne < p_cell.length; ligne++) {
+			System.out.print(ligne + "\t");
+			for (int collone = 0; collone < p_cell[0].length ; collone ++) {
+				if (p_cell[ligne][collone] == 0 ) System.out.print( "  \t ");
+				if (p_cell[ligne][collone] == 1 ) System.out.print( ". \t ");
+				if (p_cell[ligne][collone] == 2 ) System.out.print( "T \t ");
+			}
+			System.out.print("\n");
+		}
+		
+	}
 }

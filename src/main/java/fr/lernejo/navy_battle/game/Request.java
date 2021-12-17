@@ -15,11 +15,8 @@ public class Request {
 			HashMap<String, Integer> info = new HashMap<>();
 			HashMap<String, String> requettebody = this.requestUtil.jsonStringToMap(requette.get("body"));
 			info.put("consequence", bateau.toucherCoulerRater(requettebody.get("consequence")));
-			if(requettebody.get("shipLeft").equals("true")){
-				info.put("shipLeft", 1);
-			}else {
-				info.put("shipLeft", 0);
-			}
+			if(requettebody.get("shipLeft").equals("true")){ info.put("shipLeft", 0);
+			}else { info.put("shipLeft", 1);}
 			return info;
 		}
 		return null;

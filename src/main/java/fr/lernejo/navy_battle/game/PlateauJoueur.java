@@ -3,6 +3,7 @@ package fr.lernejo.navy_battle.game;
 import java.util.Map;
 
 public class PlateauJoueur extends Plateau{
+	
 	public boolean verifCaseBataeu(int p_taille, int caseSens, int autreCase, boolean p_vertical, int[][] p_cell) {
 		if (p_vertical) {
 			for ( int i = autreCase ; i < autreCase + p_taille; i++) {
@@ -41,5 +42,11 @@ public class PlateauJoueur extends Plateau{
 			p_taille --;
 			i++;
 		}
+	}
+
+	public void toucherAdverse(String p_casetoucher,  int[][] p_cell) {
+		Map<String, Integer> caseVisiter =  this.dissocierCase(p_casetoucher);
+		p_cell[caseVisiter.get("ligne")][caseVisiter.get("collone")] = 2;
+		
 	}
 }
